@@ -1,6 +1,8 @@
 import pyaudio  # 录音程序
 import wave
 import openai
+import os
+from model.predict import predict
 
 # 一次读取数据流的数据量，避免一次性的数据量大大
 CHUNK = 1024
@@ -12,8 +14,10 @@ CHANNELS = 1
 RATE = 11025
 # 录音时长，单位秒
 RECORD_SECONDS = 3
-#
-OUTPUT_FILENAME = 'output.wav'
+
+CURRENT_DIR = os.path.dirname(os.path.abspath(__file__))
+OUTPUT_FILENAME = f'{CURRENT_DIR}/output.wav'
+
 openai.api_key = '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'
 
 
@@ -29,8 +33,10 @@ def recorder(output_file: str, time=3):
 
     # 开始录制
     print("Recording...")
-    stream = audio.open(format=FORMAT, channels=CHANNELS,
-                        rate=RATE, input=True,
+    stream = audio.open(format=FORMAT,
+                        channels=CHANNELS,
+                        rate=RATE,
+                        input=True,
                         frames_per_buffer=CHUNK)
 
     frames = []
@@ -53,6 +59,16 @@ def recorder(output_file: str, time=3):
         wf.writeframes(b''.join(frames))
 
     print(f"Saved as {output_file}")
+
+
+def recognition(file):
+    try:
+        print('call model')
+        result = predict(file)
+    except any:
+        print('call whisper')
+        result = transcribe(file)
+    return result
 
 
 if __name__ == "__main__":

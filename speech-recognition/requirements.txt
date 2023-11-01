@@ -4,3 +4,6 @@
 openai=0.28.1
 pyaudio=0.2.11
 python=3.11.4
+pytorch=2.0.1
+numpy=1.26.0
+librosa=0.10.1
