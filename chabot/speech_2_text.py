@@ -13,7 +13,7 @@ CHANNELS = 1
 # 采样频率
 RATE = 11025
 # 录音时长，单位秒
-RECORD_SECONDS = 3
+RECORD_SECONDS = 5
 
 CURRENT_DIR = os.path.dirname(os.path.abspath(__file__))
 OUTPUT_FILENAME = f'{CURRENT_DIR}/output.wav'
@@ -71,7 +71,13 @@ def recognition(file):
     return result
 
 
-if __name__ == "__main__":
+def speech_2_text():
     recorder(OUTPUT_FILENAME, RECORD_SECONDS)
     result = transcribe(OUTPUT_FILENAME)
-    print(result)
+    return result
+
+
+# if __name__ == "__main__":
+#     recorder(OUTPUT_FILENAME, RECORD_SECONDS)
+#     result = transcribe(OUTPUT_FILENAME)
+#     print(result)
