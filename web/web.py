@@ -64,6 +64,8 @@ def img_post():
         # output = response.json()
         # print(output)
 
+        text = '识别失败'
+
         try:
             response = requests.post(url, data=data, verify=False)
             response.raise_for_status()
@@ -71,11 +73,11 @@ def img_post():
             if 'data' in data and data['data'] is not None and len(data['data']) > 0:
                 result = {'name': data['data'][0]['name'], 'type': data['data'][0]['type']}
                 # result = {'type': data['data']['type'], 'rubbish': data['data']['rubbish']}
+                text = '这是' + result['type']
             else:
                 result = data['message']
 
             print(result)
-            text = '这是' + result['type']
             text_2_speech(text)
             result_str = str(result)
 
