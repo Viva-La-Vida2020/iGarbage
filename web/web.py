@@ -10,6 +10,7 @@ import urllib3
 from io import BytesIO
 from PIL import Image
 import matplotlib.pyplot as plt
+from text_2_speech import text_2_speech
 
 urllib3.disable_warnings()
 
@@ -18,6 +19,7 @@ app = Flask(__name__)
 
 @app.route('/image_post', methods=['get', 'POST'])
 def img_post():
+    result_str = ''
     if request.method == 'POST':
 
         # data
@@ -68,25 +70,29 @@ def img_post():
             data = response.json()
             if 'data' in data and data['data'] is not None and len(data['data']) > 0:
                 result = {'name': data['data'][0]['name'], 'type': data['data'][0]['type']}
+                # result = {'type': data['data']['type'], 'rubbish': data['data']['rubbish']}
             else:
                 result = data['message']
 
             print(result)
-            # return jsonify(result)
+            text = '这是' + result['type']
+            text_2_speech(text)
+            result_str = str(result)
+
         #     # 处理响应数据
         #     if data['code'] == 1:
         #         results = data['data']
         #         return {"检测成功": results}
         #     else:
         #         return "检测失败"
-        #
+
         except requests.exceptions.RequestException as e:
             return {"请求发生错误": e}
 
         except ValueError as e:
             return {"无法解析JSON响应": e}
 
-    return 'done'
+    return result_str
 
 
 if __name__ == "__main__":
