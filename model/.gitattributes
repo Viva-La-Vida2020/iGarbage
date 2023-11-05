@@ -1,6 +1,0 @@
-git filter=lfs diff=lfs merge=lfs -text
-lfs filter=lfs diff=lfs merge=lfs -text
-track filter=lfs diff=lfs merge=lfs -text
-resnet50.pth filter=lfs diff=lfs merge=lfs -text
-*.h5 filter=lfs diff=lfs merge=lfs -text
-或者 filter=lfs diff=lfs merge=lfs -text
